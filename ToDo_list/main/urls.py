@@ -1,10 +1,12 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_view
+
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('undo/', views.undo, name='undo'),
-    path('redo/', views.redo, name='redo'),
-    path('save/', views.save, name='save'),
+    path('sign-up', views.sign_up, name='sign_up'),
+    path('login/', auth_view.LoginView.as_view(), name='login'),
+    path('logout/', auth_view.LogoutView.as_view(), name='logout'),
+    path('add/<int:id>', views.add, name='add'),
 ]
