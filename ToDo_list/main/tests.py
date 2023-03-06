@@ -58,7 +58,7 @@ class TestViews(TestCase):
     def test_view_sign_up_GET_context(self):
         response = self.client.get(reverse('sign_up'))
         form = UserCreationForm()
-        self.assertEqual(response.context['form'].first, form)
+        self.assertEqual(str(response.context['form']), str(form))
 
     def test_view_sign_up_POST_status_code(self):
         response = self.client.post(reverse('sign_up'), {
