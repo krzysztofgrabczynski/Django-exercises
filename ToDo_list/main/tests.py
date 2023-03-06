@@ -4,6 +4,7 @@ from .models import Goal, GoalsList, User
 from . import views
 from django.contrib.auth.forms import UserCreationForm
 
+
 class TestModels(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
@@ -68,12 +69,14 @@ class TestViews(TestCase):
         })
         self.assertEqual(response.status_code, 302)
     
-    def test_view_sign_up_POST_if_user_craeted_correctly(self):
+    def test_view_sign_up_POST_if_user_craeted_incorrectly(self):
         response = self.client.post(reverse('sign_up'), {
             'username': 'test_user',
             'password1': 'test_password123!',
-            'password2': 'test_password123!'
+            'password2': 'test'
         })
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
+        
+        
 
         
