@@ -6,7 +6,7 @@ import json
 
 
 def home(request):
-    return HttpResponse('home')
+    return render(request, 'home.html')
 
 def sign_up(request):
     if request.method == 'POST':
