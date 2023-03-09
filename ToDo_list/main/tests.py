@@ -12,14 +12,13 @@ class TestModels(TestCase):
         GoalsList.objects.create(user=user)
         Goal.objects.create(
             user=user,
-            title='Test Goal',
             details='Test Details',
         )
 
     # test for Goal model
     def test_model_Goal__str__(self):
         goal = Goal.objects.first()
-        expected = goal.title
+        expected = goal.details
 
         self.assertEqual(expected, str(goal))
 

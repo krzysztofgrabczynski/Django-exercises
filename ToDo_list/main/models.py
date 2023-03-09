@@ -6,13 +6,12 @@ from django.contrib.auth.models import User
 class Goal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     id = models.UUIDField(primary_key=True, default=uuid4(), editable=False)
-    title = models.CharField(max_length=256, blank=False)
     details = models.TextField(blank=False)
     date = models.DateField(auto_now_add=True)
     is_completed = False
     
     def __str__(self) -> str:
-        return self.title
+        return self.details
     
     def __repr__(self) -> str:
         return self.__str__()

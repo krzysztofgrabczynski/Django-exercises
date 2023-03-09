@@ -2,7 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .models import Goal, GoalsList
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-import json
+from django.contrib.auth.decorators import login_required
+from .forms import AddGoalForm
 
 
 def home(request):
@@ -23,5 +24,14 @@ def sign_up(request):
     }
     return render(request, 'registration/sign-up.html', context) 
 
+@login_required
 def add(request):
-    return HttpResponse('add')
+    if request.method == 'GET':
+        goal = request.GET.get('add_goal')
+        if goal:
+            Goal.objects.create(
+                user=request.user,
+                details=goal,
+            )
+
+    return redirect(home)
