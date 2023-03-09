@@ -42,3 +42,10 @@ def add(request):
             )
 
     return redirect(home)
+
+@login_required
+def delete(request, id):
+    goal = Goal.objects.get(pk=id)
+    goal.delete()
+
+    return redirect(home)
