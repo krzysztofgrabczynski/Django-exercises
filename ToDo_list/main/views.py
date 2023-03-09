@@ -34,7 +34,6 @@ def sign_up(request):
 def add(request):
     if request.method == 'GET':
         goal = request.GET.get('add_goal')
-        print(goal)
         if goal:
             Goal.objects.create(
                 user=request.user,

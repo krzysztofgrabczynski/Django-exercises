@@ -7,7 +7,7 @@ class Goal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     details = models.TextField(blank=False)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     is_completed = False
     
     def __str__(self) -> str:
@@ -29,7 +29,7 @@ class GoalsList(models.Model):
     
     @property
     def goals_list(self):
-        goals = Goal.objects.filter(user=self.user)
+        goals = Goal.objects.filter(user=self.user).order_by('-date')
         return list(goals)
 
     def goals_list_len(self):
