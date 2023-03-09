@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Goal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    id = models.UUIDField(primary_key=True, default=uuid4(), editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     details = models.TextField(blank=False)
     date = models.DateField(auto_now_add=True)
     is_completed = False
@@ -19,7 +19,7 @@ class Goal(models.Model):
 
 class GoalsList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='goals_list')
-    id = models.UUIDField(primary_key=True, default=uuid4(), editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
 
     def __str__(self) -> str:
         return f"{self.user}'s goals list"
