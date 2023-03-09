@@ -9,6 +9,7 @@ class Goal(models.Model):
     title = models.CharField(max_length=256, blank=False)
     details = models.TextField(blank=False)
     date = models.DateField(auto_now_add=True)
+    is_completed = False
     
     def __str__(self) -> str:
         return self.title
