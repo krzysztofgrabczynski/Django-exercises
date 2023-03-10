@@ -48,3 +48,12 @@ def delete(request, id):
     goal.delete()
 
     return redirect(home)
+
+@login_required
+def check_status_completed(request, id):
+    goal = Goal.objects.get(pk=id)
+    goal.is_completed = not goal.is_completed
+    goal.save()
+
+    return redirect(home)
+

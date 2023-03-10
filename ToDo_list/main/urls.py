@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', auth_view.LogoutView.as_view(), name='logout'),
     path('add/', views.add, name='add'),
     path('delete/<uuid:id>', views.delete, name='delete'),
+    path('status-completed/<uuid:id>', views.check_status_completed, name='check_status_completed'),
 ]

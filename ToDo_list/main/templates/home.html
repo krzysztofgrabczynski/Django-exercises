@@ -37,8 +37,6 @@
                 <select class="select">
                   <option value="1">All</option>
                   <option value="2">Completed</option>
-                  <option value="3">Active</option>
-                  <option value="4">Has due date</option>
                 </select>
                 <p class="small mb-0 ms-4 me-2 text-muted">Sort</p>
                 <select class="select">
@@ -54,6 +52,13 @@
                 <li
                   class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
                   <div class="form-check">
+                    <a href="{% url 'check_status_completed' goal.id %}">
+                      {% if goal.is_completed %}
+                          &check;
+                      {% else %}
+                          &#x25a2;
+                      {% endif %}
+                  </a>
                     <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked1"
                       aria-label="..." checked />
                   </div>

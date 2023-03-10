@@ -8,7 +8,7 @@ class Goal(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     details = models.TextField(blank=False)
     date = models.DateTimeField(auto_now_add=True)
-    is_completed = False
+    is_completed = models.BooleanField(default=False)
     
     def __str__(self) -> str:
         return self.details
