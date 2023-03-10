@@ -1,8 +1,9 @@
 from django.test import TestCase, Client
-from django.urls import reverse
+from django.urls import reverse, resolve
 from .models import Goal, GoalsList, User
 from . import views
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 class TestModels(TestCase):
@@ -77,5 +78,49 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         
         
+class TestUrls(TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        user = User.objects.create_user(
+            username='test',
+            password='examplepassword123!',
+        )
 
+        Goal.objects.create(
+            user=user,
+            details='test details',
+        )
+
+    def test_url_home(self):
+        url = reverse('home')
+        self.assertEqual(resolve(url).func, views.home)
+
+    def test_url_sign_up(self):
+        url = reverse('sign_up')
+        self.assertEqual(resolve(url).func, views.sign_up)
+    
+    def test_url_login(self):
+        url = reverse('login')
+        self.assertEqual(resolve(url).func.view_class, LoginView)
+
+    def test_url_logout(self):
+        url = reverse('logout')
+        self.assertEqual(resolve(url).func.view_class, LogoutView)
+
+    def test_url_add(self):
+        url = reverse('add')
+        self.assertEqual(resolve(url).func, views.add)
+
+    def test_url_delete(self):
+        goal = Goal.objects.first()
+        url = reverse('delete', args=[goal.id])
+        self.assertEqual(resolve(url).func, views.delete)   
+
+    def test_url_status_completed(self):
+        goal = Goal.objects.first()
+        url = reverse('check_status_completed', args=[goal.id])
+        self.assertEqual(resolve(url).func, views.check_status_completed)                  
+                         
+
+    
         
