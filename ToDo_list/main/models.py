@@ -29,8 +29,11 @@ class GoalsList(models.Model):
     
     @property
     def goals_list(self):
-        goals = Goal.objects.filter(user=self.user).order_by('-date')
-        return list(goals)
+        try:
+            goals = Goal.objects.filter(user=self.user).order_by('-date')
+            return list(goals)
+        except:
+            return None
 
     def goals_list_len(self):
         return len(self.goals_list)
