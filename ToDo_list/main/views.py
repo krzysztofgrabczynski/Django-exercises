@@ -8,9 +8,17 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def home(request):
     users_goalslist = GoalsList.objects.get(user=request.user)
+    goals = users_goalslist.goals_list
+
+    f = request.GET.get('filter')
+    if f:
+        if f == 'Completed':
+            goals = list(filter(lambda x: x.is_completed == True, goals))   
+        elif f == 'NotCompleted':
+            goals = list(filter(lambda x: x.is_completed == False, goals))   
 
     context = {
-        'goals': users_goalslist.goals_list,
+        'goals': goals,
     }
     return render(request, 'home.html', context)
 

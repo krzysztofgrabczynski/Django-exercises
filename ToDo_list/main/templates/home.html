@@ -33,13 +33,17 @@
               <hr class="my-4">
   
               <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
-                <p class="small mb-0 me-2 text-muted">Filter</p>
-                <select class="select">
-                  <option value="1">All</option>
-                  <option value="2">Completed</option>
-                </select>
+                <form action="{% url 'home' %}" method="get">
+                  <input type="radio" class="btn" name="filter" value="All">
+                  <label for="All">All</label><br>
+                  <input type="radio" class="btn" name="filter" value="Completed">
+                  <label for="Completed">Completed</label><br>
+                  <input type="radio" class="btn" name="filter" value="NotCompleted">
+                  <label for="Completed">Not Completed</label><br>
+                  <input type="submit" value="Filter" class="btn">
+                </form>
                 <p class="small mb-0 ms-4 me-2 text-muted">Sort</p>
-                <select class="select">
+                  <select class="select">
                   <option value="1">Added date</option>
                   <option value="2">Due date</option>
                 </select>
@@ -58,9 +62,7 @@
                       {% else %}
                           &#x25a2;
                       {% endif %}
-                  < /a>
-                    <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked1"
-                      aria-label="..." checked />
+                    </a>
                   </div>
                 </li>
                 <li
