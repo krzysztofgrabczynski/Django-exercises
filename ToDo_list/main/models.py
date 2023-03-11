@@ -34,7 +34,7 @@ class GoalsList(models.Model):
             return list(goals)
         except:
             return None
-
+        
     def goals_list_len(self):
         return len(self.goals_list)
     
