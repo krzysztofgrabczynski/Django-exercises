@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Goal, GoalsList
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login

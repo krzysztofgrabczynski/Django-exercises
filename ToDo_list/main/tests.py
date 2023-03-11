@@ -44,8 +44,17 @@ class TestModels(TestCase):
 
 
 class TestViews(TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        User.objects.create_user(
+            username='test',
+            password='examplepassword123!',
+        )
+
     def setUp(self) -> None:
         self.client = Client()
+        self.user = User.objects.first()
+        self.client.login(username=self.user.username, password='examplepassword123!')
 
     # test for sign-up view
     def test_view_sign_up_GET_status_code(self):
@@ -71,7 +80,31 @@ class TestViews(TestCase):
             'password2': 'test'
         })
         self.assertEqual(response.status_code, 200)
+
+    # test for home view
+    # test for add view
+    def test_view_add_status_code(self):
+        response = self.client.get(reverse('add'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_view_add_goal_correct_data(self):
+        self.client.get(reverse('add'), {
+            'add_goal': 'test'
+        })
         
+        goals = Goal.objects.all()
+        self.assertEqual(goals.count(), 1)
+
+    def test_view_add_goal_incorrect_data(self):
+        self.client.get(reverse('add'), {
+            'add_goal': ''
+        })
+        
+        goals = Goal.objects.all()
+        self.assertEqual(goals.count(), 0)
+
+    # test for delete view
+    # test for check_status_completed view
         
 class TestUrls(TestCase):
     @classmethod
