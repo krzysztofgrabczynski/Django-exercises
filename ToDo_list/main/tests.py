@@ -50,6 +50,9 @@ class TestViews(TestCase):
             username='test',
             password='examplepassword123!',
         )
+        GoalsList.objects.create(
+            user = User.objects.first()
+        )
 
     def setUp(self) -> None:
         self.client = Client()
@@ -82,6 +85,62 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
     # test for home view
+    def test_home_view_status_code(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_home_view_template(self):
+        response = self.client.get(reverse('home'))
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_home_view_context_without_filter(self):
+        Goal.objects.create(
+                user=self.user,
+                details='test',
+            )
+        response = self.client.get(reverse('home'))
+        goals = Goal.objects.all()
+        
+        self.assertEqual(list(response.context['goals']), list(goals))
+
+    def test_home_view_context_with_Completed_filter(self):
+        goal_1=Goal.objects.create(
+                user=self.user,
+                details='test1',
+            )
+        goal_1.is_completed = True
+        goal_1.save()
+        goal_2=Goal.objects.create(
+                user=self.user,
+                details='test2',
+            )
+
+        response = self.client.get(reverse('home'), {
+            'filter': 'Completed'
+        })
+        goals = [goal_1]
+
+        self.assertEqual(list(response.context['goals']), goals)
+
+    def test_home_view_context_with_NotCompleted_filter(self):
+        goal_1=Goal.objects.create(
+                user=self.user,
+                details='test1',
+            )
+        goal_1.is_completed = True
+        goal_1.save()
+        goal_2=Goal.objects.create(
+                user=self.user,
+                details='test2',
+            )
+
+        response = self.client.get(reverse('home'), {
+            'filter': 'NotCompleted'
+        })
+        goals = [goal_2]
+
+        self.assertEqual(list(response.context['goals']), goals)
+
     # test for add view
     def test_view_add_status_code(self):
         response = self.client.get(reverse('add'))
