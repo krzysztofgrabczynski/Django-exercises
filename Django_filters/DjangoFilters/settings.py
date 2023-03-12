@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
+
 
 # Application definition
 
@@ -37,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
