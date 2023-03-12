@@ -13,6 +13,6 @@ class FilmFilter(django_filters.FilterSet):
             'title': ['icontains'],
             'category': ['exact'],
             'premiere': ['exact'],
-            'year': ['exact'],
+            'year': ['lt', 'gt'],
             'director': ['icontains'],
         }
