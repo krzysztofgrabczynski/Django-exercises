@@ -3,9 +3,20 @@
 
 {% block body %}
 
-<form method="get">
+<form method="get" action="{% url 'list_view' %}">
     {{ filter.as_p }}
-    <input type="submit"/>
+
+    <input type="radio" class="btn" name="sort" value="title">
+    <label for="title">Sort by title</label><br>
+    <input type="radio" class="btn" name="sort" value="category">
+    <label for="category">Sort by category</label><br>
+    <input type="radio" class="btn" name="sort" value="year">
+    <label for="year">Sort by year</label><br>
+    <input type="radio" class="btn" name="sort" value="imdb_rating">
+    <label for="imdb_rating">Sort by imdb rating</label><br>
+
+    <br>
+    <input type="submit" class="btn btn-secondary"/>
 </form>
 
 <div class="container">

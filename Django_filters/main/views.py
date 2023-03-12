@@ -15,14 +15,27 @@ def index(request, *args, **kwargs):
 
 
 class FilmListView(ListView):
-    template_name = 'index.html'
+    model = Film
     queryset = Film.objects.all()
+    template_name = 'index.html'
     context_object_name = 'films'
 
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = FilmFilter(self.request.GET, queryset=queryset)
-        return self.filterset.qs
+        queryset = self.filterset.qs
+
+        sort = self.request.GET.get('sort')
+        if sort == 'title':
+            queryset = self.filterset.qs.order_by('title')
+        elif sort == 'category':
+            queryset = self.filterset.qs.order_by('category')
+        elif sort == 'year':
+            queryset = self.filterset.qs.order_by('year')
+        elif sort == 'imdb_rating':
+            queryset = self.filterset.qs.order_by('-imdb_rating')
+
+        return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
