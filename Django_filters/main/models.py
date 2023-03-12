@@ -15,8 +15,9 @@ class Film(models.Model):
     title = models.CharField(max_length=128, blank=False)
     category = models.CharField(max_length=2, choices=CategoryChoices.choices, default=CategoryChoices.OTHER)
     description = models.TextField(blank=False)
-    year = models.PositiveSmallIntegerField(blank=False, default='2000')
+    year = models.PositiveSmallIntegerField(blank=False, default=2000)
     premiere = models.DateField(blank=False)
     imdb_rating = models.DecimalField(blank=False, max_digits=4, decimal_places=2)
     director = models.CharField(max_length=256, blank=False)
+
 

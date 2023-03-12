@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .models import Film
+from .filters import FilmFilter
 
 
 def index(request, *args, **kwargs):
-    films = Film.objects.all()
-    
+    film_filter = FilmFilter(request.GET, queryset=Film.objects.all())
+
     context = {
-        'films': films
+        'form': film_filter.form,
+        'films': film_filter.qs
     }
     return render(request, 'index.html', context)
