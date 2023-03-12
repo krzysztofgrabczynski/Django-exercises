@@ -104,7 +104,29 @@ class TestViews(TestCase):
         self.assertEqual(goals.count(), 0)
 
     # test for delete view
+    def test_view_delete(self):
+        goal = Goal.objects.create(
+                user=self.user,
+                details='test',
+            )
+        self.client.get(reverse('delete', kwargs={'id': goal.id}))
+
+        goals = Goal.objects.all()
+        self.assertEqual(goals.count(), 0)
+
     # test for check_status_completed view
+    def test_view_check_status_completed(self):
+        goal = Goal.objects.create(
+                user=self.user,
+                details='test',
+            )
+        goals = Goal.objects.first()
+        self.assertFalse(goals.is_completed)
+        
+        self.client.get(reverse('check_status_completed', kwargs={'id': goal.id}))
+        goals.refresh_from_db()
+
+        self.assertTrue(goals.is_completed)
         
 class TestUrls(TestCase):
     @classmethod
