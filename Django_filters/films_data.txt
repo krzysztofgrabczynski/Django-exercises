@@ -1,0 +1,13 @@
+Film.objects.create(title='Titanic', category=Film.CategoryChoices.DRAMA, description='Sad film', year=1997, premiere='1998-11-01', imdb_rating=7.3, director='James Cameron')
+Film.objects.create(title='The Shawshank Redemption', category=Film.CategoryChoices.DRAMA, description='Nice film', year=1994, premiere='1994-09-10', imdb_rating=8.8, director='Stephen King')
+Film.objects.create(title='The Intouchables', category=Film.CategoryChoices.DRAMA, description='Nice film', year=1994, premiere='1994-09-10', imdb_rating=8.8, director='Stephen King')
+Film.objects.create(title='Avatar: The Way of Water', category=Film.CategoryChoices.SCI_FI, description='Nice film', year=2022, premiere='2022-12-14', imdb_rating=7.3, director='James Cameron')
+Film.objects.create(title='
+The Lord of the Rings: The Return of the King', category=Film.CategoryChoices.ADVENTURE, description='Love this film', year=2003, premiere='2003-12-01', imdb_rating=8.4, director='Peter Jackson')
+Film.objects.create(title='Avatar', category=Film.CategoryChoices.SCI_FI, description='Better them second', year=2009, premiere='2009-12-10', imdb_rating=7.4, director='James Cameron')
+Film.objects.create(title='
+The Lord of the Rings: The Two Towers', category=Film.CategoryChoices.ADVENTURE, description='The best film', year=2002, premiere='2002-12-05', imdb_rating=8.3, director='Peter Jackson')
+Film.objects.create(title='Bullet Train', category=Film.CategoryChoices.ACTION, description='Good action', year=2022, premiere='2022-07-14', imdb_rating=6.9, director='David Leitch')
+Film.objects.create(title='Sherek', category=Film.CategoryChoices.OTHER, description='Animated film', year=2001, premiere='2001-04-22', imdb_rating=7.8, director='Andrew Adamson')
+Film.objects.create(title='Sherek 2', category=Film.CategoryChoices.OTHER, description='Animated film', year=2004, premiere='2004-05-08', imdb_rating=7.4, director='Andrew Adamson')
+Film.objects.create(title='Star Wars', category=Film.CategoryChoices.SCI_FI, description='Astonishing', year=1999, premiere='1999-05-16', imdb_rating=7.2, director='George Lucas')

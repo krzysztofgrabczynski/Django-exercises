@@ -12,7 +12,7 @@ class Film(models.Model):
         OTHER = 'O'
         
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
-    titel = models.CharField(max_length=128, blank=False)
+    title = models.CharField(max_length=128, blank=False)
     category = models.CharField(max_length=2, choices=CategoryChoices.choices, default=CategoryChoices.OTHER)
     description = models.TextField(blank=False)
     year = models.PositiveSmallIntegerField(blank=False, default='2000')

@@ -15,12 +15,17 @@
             </tr>
         </thead>
         <tbody>
+            {% for film in films %}
                 <tr>
-                    <td>d</td>
-                    <td>d</td>
-                    <td>d</td>
-                    <td>d</td>
+                    <td>{{ film.title }}</td>
+                    <td>{{ film.get_category_display }}</td>
+                    <td>{{ film.description }}</td>
+                    <td>{{ film.year }}</td>
+                    <td>{{ film.premiere }}</td>
+                    <td>{{ film.imdb_rating }}</td>
+                    <td>{{ film.director }}</td>
                 </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
