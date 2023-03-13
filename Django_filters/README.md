@@ -4,7 +4,7 @@
 
 A quick exercise using django-filters and creating own ListView with sorting functions.
 
-If you want to check out my other projects [click here.](https://github.com/krzysztofgrabczynski)
+If you want to check out my projects [click here.](https://github.com/krzysztofgrabczynski)
 
 ## Preview
 <p align="center">
