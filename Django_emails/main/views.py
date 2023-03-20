@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.mail import send_mail, send_mass_mail
+from django.core.mail import send_mail, send_mass_mail, BadHeaderError
 from .forms import send_email_v2_form
 
 
@@ -28,9 +28,12 @@ def send_email_v2(request):
         from_email = 'django.emails.project@gmail.com'
 
         if subject and message and recipients:
-            send_mail(subject, message, from_email, recipients)
+            try: 
+                send_mail(subject, message, from_email, recipients)
+            except BadHeaderError:
+                return HttpResponse('Invalid header found')
             return redirect(index)
-        else:
+        else:    
             return HttpResponse('Error while sending email') 
 
     context = {
