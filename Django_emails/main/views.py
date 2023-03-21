@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.mail import send_mail, send_mass_mail, BadHeaderError, EmailMessage
-from .forms import send_email_v2_form, send_email_with_attachments_form
+from .forms import SendEmailForm, SendEmailWithAttachmentsForm
 from django_emails.settings import EMAIL_HOST_USER
 
 
@@ -20,7 +20,7 @@ def send_email(request):
 
 
 def send_email_v2(request):
-    email_form = send_email_v2_form(request.POST or None)
+    email_form = SendEmailForm(request.POST or None)
 
     if request.method == 'POST':
         subject = request.POST['subject']
@@ -43,7 +43,7 @@ def send_email_v2(request):
     return render(request, 'send_email_v2.html', context)
 
 def send_email_with_attachments(request):
-    form = send_email_with_attachments_form(request.POST or None, request.FILES or None)
+    form = SendEmailWithAttachmentsForm(request.POST or None, request.FILES or None)
 
     if request.method == 'POST':
         subject = request.POST.get('subject', '')
