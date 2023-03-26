@@ -3,13 +3,13 @@ from django.db import models
 
 class BaseModel(models.Model):
     class TypeChoices(models.IntegerChoices):
-        FILM = 1
-        BOOK = 2
-        ARTICLE = 3
+        FILM = 0
+        BOOK = 1
+        ARTICLE = 2
 
     title = models.CharField(max_length=254)
     description = models.TextField()
-    type = models.CharField(max_length=7, choices=TypeChoices.choices)
+    type = models.IntegerField(choices=TypeChoices.choices)
     price = models.FloatField()
     is_available = models.BooleanField(default=False)
 
