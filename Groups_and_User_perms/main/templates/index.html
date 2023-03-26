@@ -12,6 +12,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Price</th>
                 <th scope="col">Is available</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,10 @@
                     <td>{{ obj.get_type_display }}</td>
                     <td>{{ obj.price }}</td>
                     <td>{{ obj.is_available }}</td>
+                    <td>
+                        <a href="{% url 'edit' obj.id %}" class="btn btn-success btn-sm" role="button">Edit</a>
+                        <a href="{% url 'delete' obj.id %}" class="btn btn-danger btn-sm delete-confirm" role="button">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
