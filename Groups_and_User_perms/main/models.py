@@ -28,7 +28,7 @@ class BaseModel(models.Model):
         for subclass in cls.__subclasses__():
             subclass_objects = subclass.objects.all()
             if subclass_objects:
-                objects.append(subclass_objects)
+                objects.extend(subclass_objects)
                 
         return objects
 
