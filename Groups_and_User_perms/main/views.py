@@ -21,7 +21,7 @@ def create_obj(request):
         if form.is_valid():
             obj_type = form.cleaned_data['type']
             if int(obj_type) == BaseModel.TypeChoices.FILM.value:
-                Film.objects.get_or_create(
+                Film.objects.create(
                     title = form.cleaned_data['title'],
                     description = form.cleaned_data['description'],
                     type = obj_type,
@@ -62,15 +62,33 @@ def edit(request, id):
 
     if request.method == 'POST':
         if form.is_valid():
-            Book.objects.update(
-                title = form.cleaned_data['title'],
-                description = form.cleaned_data['description'],
-                type = 1,
-                price = form.cleaned_data['price'],
-                is_available = form.cleaned_data['is_available'],
-            )
+            obj_type = form.cleaned_data['type']
+            if int(obj_type) == BaseModel.TypeChoices.FILM.value:
+                Film.objects.update(
+                    title = form.cleaned_data['title'],
+                    description = form.cleaned_data['description'],
+                    type = obj_type,
+                    price = form.cleaned_data['price'],
+                    is_available = form.cleaned_data['is_available'],
+                )
+            elif int(obj_type) == BaseModel.TypeChoices.BOOK.value:
+                Book.objects.update(
+                    title = form.cleaned_data['title'],
+                    description = form.cleaned_data['description'],
+                    type = obj_type,
+                    price = form.cleaned_data['price'],
+                    is_available = form.cleaned_data['is_available'],
+                )
+            elif int(obj_type) == BaseModel.TypeChoices.ARTICLE.value:
+                Article.objects.update(
+                    title = form.cleaned_data['title'],
+                    description = form.cleaned_data['description'],
+                    type = obj_type,
+                    price = form.cleaned_data['price'],
+                    is_available = form.cleaned_data['is_available'],
+                )
 
-        return redirect(index)
+            return redirect(index)
     
     return render(request, 'edit_obj.html', {'form': form})
 
