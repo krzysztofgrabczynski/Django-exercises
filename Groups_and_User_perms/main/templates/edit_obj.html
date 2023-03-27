@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block body %} 
+
+<div class="card mx-auto text-center my-5" style="width: 48rem;">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            
+            {% csrf_token %}
+            {{ form|bootstrap }}
+
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
