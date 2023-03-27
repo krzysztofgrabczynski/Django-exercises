@@ -1,4 +1,6 @@
 from django.db import models
+from polymorphic.query import PolymorphicQuerySet
+from uuid import uuid4
 
 
 class BaseModel(models.Model):
@@ -7,6 +9,7 @@ class BaseModel(models.Model):
         BOOK = 1
         ARTICLE = 2
 
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)
     title = models.CharField(max_length=254)
     description = models.TextField()
     type = models.IntegerField(choices=TypeChoices.choices)
@@ -22,15 +25,16 @@ class BaseModel(models.Model):
     def __repr__(self) -> str:
         return self.__str__()
 
-    @classmethod
-    def get_all_objects(cls):
-        objects = []
-        for subclass in cls.__subclasses__():
-            subclass_objects = subclass.objects.all()
-            if subclass_objects:
-                objects.extend(subclass_objects)
-                
-        return objects
+    class SubclassesContextManager:
+        def __init__(self) -> None:
+            self.subclasses = BaseModel.__subclasses__()
+
+        def __enter__(self):
+            for subclass in self.subclasses:
+                yield subclass
+            
+        def __exit__(self, exc_type, exc_value, trace):
+            pass
 
 
 class Film(BaseModel):

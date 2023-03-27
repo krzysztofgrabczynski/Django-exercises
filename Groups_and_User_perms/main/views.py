@@ -4,7 +4,10 @@ from .forms import AddNewForm
 
 
 def index(request):
-    objects = BaseModel.get_all_objects()
+    objects = []
+    with BaseModel.SubclassesContextManager() as manager:
+        for obj in manager:
+            objects.extend(obj.objects.all())
 
     context = {
         'objects': objects
@@ -50,4 +53,11 @@ def edit(request, id):
     pass
 
 def delete(request, id):
-    pass
+    result = None
+    with BaseModel.SubclassesContextManager() as manager:
+        for obj in manager:
+            if not result:
+                result = obj.objects.filter(id=id)
+
+    result.delete()
+    return redirect(index)
