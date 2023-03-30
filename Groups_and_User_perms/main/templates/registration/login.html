@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block body %} 
+
+    <div class="card mx-auto text-center my-5" style="width: 32rem;">
+        <div class="card-body">
+          <h5 class="card-title">Log in</h5>
+            <form method="post">
+
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username..." class="form-control">
+                <br>
+                <input type="text" name="password" placeholder="Password..." class="form-control">
+                <p>If you don't have an account, click <a href="{% url 'sign_up' %}">Here</a></p>
+
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+        </div>
+      </div>
+      
+{% endblock %}

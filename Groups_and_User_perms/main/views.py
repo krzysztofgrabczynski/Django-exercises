@@ -1,7 +1,37 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.contrib.auth import login, authenticate, logout
 from .models import BaseModel, Film, Book, Article
 from .forms import AddNewForm
+from django.contrib.auth.forms import UserCreationForm
 
+
+def sign_up(request):
+    form = UserCreationForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(index)
+
+    return render(request, 'registration/sign_up.html', {'form': form})
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            
+            return redirect(index)
+
+    return render(request, 'registration/login.html')
+
+def logout_user(request):
+    logout(request)
+
+    return redirect(index)
 
 def index(request):
     objects = []
@@ -36,7 +66,7 @@ def create_obj(request):
                     price = form.cleaned_data['price'],
                     is_available = form.cleaned_data['is_available'],
                 )
-            elif int(obj_type) == BaseModel.TypeChoices.ARTICLE.value:
+            elif int(obj_type) == BaseModel.TypeChoices.ARTICLE.value: 
                 Article.objects.create(
                     title = form.cleaned_data['title'],
                     description = form.cleaned_data['description'],
