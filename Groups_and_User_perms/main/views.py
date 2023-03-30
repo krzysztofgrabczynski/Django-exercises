@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from .models import BaseModel, Film, Book, Article
 from .forms import AddNewForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 def sign_up(request):
@@ -28,11 +29,13 @@ def login_user(request):
 
     return render(request, 'registration/login.html')
 
+@login_required
 def logout_user(request):
     logout(request)
 
     return redirect(index)
 
+@login_required
 def index(request):
     objects = []
     with BaseModel.SubclassesContextManager() as manager:
@@ -44,6 +47,7 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+@login_required
 def create_obj(request):
     form = AddNewForm(request.POST or None)
 
@@ -79,6 +83,7 @@ def create_obj(request):
     
     return render(request, 'create_obj.html', {'form': form})
 
+@login_required
 def edit(request, id):
     result = None
     with BaseModel.SubclassesContextManager() as manager:
@@ -122,6 +127,7 @@ def edit(request, id):
     
     return render(request, 'edit_obj.html', {'form': form})
 
+@login_required
 def delete(request, id):
     result = None
     with BaseModel.SubclassesContextManager() as manager:
