@@ -11,7 +11,7 @@
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="Username..." class="form-control">
                 <br>
-                <input type="text" name="password" placeholder="Password..." class="form-control">
+                <input type="password" name="password" placeholder="Password..." class="form-control">
                 <p>If you don't have an account, click <a href="{% url 'sign_up' %}">Here</a></p>
 
                 <button type="submit" class="btn btn-primary">Log in</button>
