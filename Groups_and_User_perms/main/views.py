@@ -1,11 +1,14 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
-from .models import BaseModel, Film, Book, Article
-from .forms import AddNewForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
+from .models import BaseModel, Film, Book, Article
+from .forms import AddNewForm
+from .decorators import if_logged
 
+
+@if_logged
 def sign_up(request):
     form = UserCreationForm(request.POST or None)
     if request.method == 'POST':
@@ -16,6 +19,7 @@ def sign_up(request):
 
     return render(request, 'registration/sign_up.html', {'form': form})
 
+@if_logged
 def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
