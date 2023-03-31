@@ -2,18 +2,21 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 
 from .models import BaseModel, Film, Book, Article
 from .forms import AddNewForm
-from .decorators import if_logged
+from .decorators import if_logged, allow_by_group
 
 
 @if_logged
 def sign_up(request):
     form = UserCreationForm(request.POST or None)
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid():           
             user = form.save()
+            group = Group.objects.get(name='default')
+            user.groups.add(group)
             login(request, user)
             return redirect(index)
 
@@ -40,6 +43,7 @@ def logout_user(request):
     return redirect(index)
 
 @login_required
+@allow_by_group(['admin','default'])
 def index(request):
     objects = []
     with BaseModel.SubclassesContextManager() as manager:
@@ -52,6 +56,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 @login_required
+@allow_by_group(['admin'])
 def create_obj(request):
     form = AddNewForm(request.POST or None)
 
