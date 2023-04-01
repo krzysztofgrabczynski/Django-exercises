@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.contrib.auth.models import Group
 
 from .models import BaseModel, Film, Book, Article
@@ -56,7 +56,8 @@ def index(request):
     return render(request, 'index.html', context)
 
 @login_required
-@allow_by_group(['admin'])
+@permission_required('main.create_film', 'main.create_book', 'main.create_article')
+#@user_passes_test(lambda user: user.groups.filter(name='admin').exists())
 def create_obj(request):
     form = AddNewForm(request.POST or None)
 
@@ -93,6 +94,7 @@ def create_obj(request):
     return render(request, 'create_obj.html', {'form': form})
 
 @login_required
+@permission_required(login_url='index', perm=['main.change_film','main.change_book', 'main.change_article'])
 def edit(request, id):
     result = None
     with BaseModel.SubclassesContextManager() as manager:
@@ -137,6 +139,7 @@ def edit(request, id):
     return render(request, 'edit_obj.html', {'form': form})
 
 @login_required
+@permission_required(login_url='index', perm=['main.delete_film','main.delete_book', 'main.delete_article'])
 def delete(request, id):
     result = None
     with BaseModel.SubclassesContextManager() as manager:
