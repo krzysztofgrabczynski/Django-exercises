@@ -6,6 +6,7 @@ class BookModel(models.Model):
     slug = models.SlugField(max_length=254, blank=False)
     author = models.CharField(max_length=254)
     price = models.IntegerField()
+    redirect_counter = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

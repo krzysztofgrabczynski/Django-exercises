@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <a href="{% url 'template-view' %}"> TemplateView example</a><br>
+    <a href="{% url 'books-list-view' %}"> Books ListView</a><br>
+    <a href="{% url 'books-redirect-view' %}"> Books RedirectView</a><br>
+
+{% endblock %}
