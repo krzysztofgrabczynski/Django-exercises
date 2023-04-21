@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.utils import timezone
 
 from .models import BookModel
+from .forms import BookForm
 
 
 class TimeTemplateView(TemplateView):
@@ -55,3 +57,13 @@ class BookRedirectView(RedirectView):
         book.save()
 
         return super().get_redirect_url(*args, **kwargs)
+
+
+class AddBookFormView(FormView):
+    form_class = BookForm
+    template_name = 'book-form.html'
+    success_url = '/main/'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
