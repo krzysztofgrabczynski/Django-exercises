@@ -17,14 +17,15 @@ class TimeTemplateView(TemplateView):
 
 class BooksListView(ListView):
     model = BookModel
-    queryset = BookModel.objects.all()
+    #queryset = BookModel.objects.all()
     context_object_name = 'books'
     template_name = 'books.html'
     paginate_by = 2
 
-    # def get_queryset(self):
-    #     queryset = BookModel.objects.filter(author__icontains='James')
-    #     return queryset
+    def get_queryset(self, *args, **kwargs):
+        queryset = BookModel.objects.filter(author__icontains=self.kwargs.get('author', ''))
+        return queryset
+
 
 class BooksRedirectView(RedirectView):
     pattern_name = 'books-list-view'
