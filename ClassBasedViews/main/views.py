@@ -67,3 +67,7 @@ class AddBookFormView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        context = {'form':form, 'errors':form.errors}
+        return self.render_to_response(self.get_context_data(**context))
