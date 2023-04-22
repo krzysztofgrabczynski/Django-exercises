@@ -6,4 +6,4 @@ from .models import BookModel
 class BookForm(ModelForm):
     class Meta:
         model = BookModel
-        exclude = ('redirect_counter', )
+        exclude = ('slug', 'redirect_counter', )
