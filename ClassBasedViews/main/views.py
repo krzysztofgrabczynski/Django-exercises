@@ -43,7 +43,7 @@ class BookDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         book = BookModel.objects.get(slug=self.kwargs.get('slug'))
         if book.redirect_counter > 0:
-            context['redirect_counter'] = f'Somebody get into that site by RedirectView ({book.redirect_counter} times)'
+            context['redirect_counter'] = book.redirect_counter
 
         return context
     
@@ -78,3 +78,16 @@ class AddBookCreateView(CreateView):
     form_class = BookForm
     success_url = '/main/'
     template_name = 'book-form.html'
+
+
+class EditBookUpdateView(UpdateView):
+    model = BookModel
+    form_class = BookForm
+    template_name = 'book-form.html'
+
+    def get_success_url(self) -> str:
+        obj_id = self.kwargs.get('pk')
+        obj = BookModel.objects.get(pk=obj_id)
+        return f'/main/book-detail-view/{obj.slug}'    
+    
+    

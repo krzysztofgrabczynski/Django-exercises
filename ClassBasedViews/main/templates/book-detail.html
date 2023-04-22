@@ -2,6 +2,8 @@
 
 {% block body %}
     
-    {{ book.title }} --- {{ redirect_counter}}
-
+    {{ book.title }} --- Somebody get into that site by RedirectView - {{ redirect_counter}} times
+    <br>
+    Edit book --- <a href="{% url 'edit-book-update-view' book.id %}">click...</a>
+    <hr>
 {% endblock %}
