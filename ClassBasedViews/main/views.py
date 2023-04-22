@@ -71,3 +71,10 @@ class AddBookFormView(FormView):
     def form_invalid(self, form):
         context = {'form':form, 'errors':form.errors}
         return self.render_to_response(self.get_context_data(**context))
+    
+
+class AddBookCreateView(CreateView):
+    model = BookModel
+    form_class = BookForm
+    success_url = '/main/'
+    template_name = 'book-form.html'
