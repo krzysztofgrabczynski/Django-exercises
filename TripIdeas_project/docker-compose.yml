@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: trip_ideas_django
+    command: python manage.py runserver "0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+  db:
+    image: postgres:12
+    container_name: trip_ideas_postgres
+    env_file:
+      - .env
+  celery:
+    build: .
+    container_name: trip_ideas_celery
+    command: celery -A core worker -l info --pool=solo
+    depends_on:
+      - web
+      - redis
+  redis:
+    image: "redis:alpine"
+    container_name: trip_ideas_redis
+
+
