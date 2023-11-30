@@ -10,5 +10,4 @@ urlpatterns = [
     path("sign-up/", app_views.CreateUserFormView.as_view(), name="sign_up"),
     path("login/", if_logged_user(LoginView.as_view()), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
-
 ]

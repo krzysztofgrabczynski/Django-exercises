@@ -14,6 +14,5 @@ class UserRegistrationForm(UserCreationForm):
         phone_number = self.cleaned_data["phone_number"]
         if not phone_number.isdigit() or not len(phone_number) == 9:
             raise forms.ValidationError("Phone number must be a number with 9 digits")
-        
-            
+
         return phone_number
