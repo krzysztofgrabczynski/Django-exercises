@@ -9,7 +9,7 @@
           <h5 class="card-title">Sign up</h5>
             <form method="post">
                 {% csrf_token %}
-                {{ form }}
+                {{ form.as_p }}
                 <br>
                 <button type="submit" class="btn btn-primary">Sign up</button>
             </form>
