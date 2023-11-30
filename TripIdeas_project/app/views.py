@@ -15,11 +15,12 @@ class CreateUserFormView(generic.FormView):
     form_class = UserRegistrationForm
     success_url = "home/"
 
-
     def form_valid(self, form):
         user = form.save()
         phone_number = form.cleaned_data["phone_number"]
         
         UserProfile.objects.create(user=user, phone_number=phone_number)
-    
+        login(self.request, user)
+
         return super().form_valid(form)
+    
