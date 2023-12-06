@@ -114,3 +114,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Celery and Redis settings
 CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+
+# Email settings
+EMAIL_HOST_USER = ...
