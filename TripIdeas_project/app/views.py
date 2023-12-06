@@ -4,6 +4,7 @@ from django.contrib.auth import login
 
 from app.forms import UserRegistrationForm, ForgetPasswordForm
 from app.models import UserProfile
+from app.tasks import send_reset_password_email_task
 
 
 def home(request):
@@ -31,5 +32,10 @@ class ForgetPasswordView(generic.FormView):
     success_url = "/app/login/"
 
     def form_valid(self, form):
+        email = form.cleaned_data["email"]
+        reset_password_link = ...
+
+        send_reset_password_email_task.delay(reset_password_link, email)
+
         return super().form_valid(form)
     
