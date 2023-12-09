@@ -1,12 +1,9 @@
 from django.core.mail import send_mail
+from django.utils.safestring import SafeString
 
-from core.settings import EMAIL_HOST_USER
 
-
-def send_reset_password_email(reset_password_link: str, recipient: str):
+def send_reset_password_email(message: SafeString, from_email: str, to_email: str):
     subject = "Reset password email"
-    message = f"Here is your reset password link {reset_password_link}"
-    from_email = EMAIL_HOST_USER
-    recipient = [recipient]
+    to_email = [to_email]
 
-    send_mail(subject, message, from_email, recipient)
+    send_mail(subject, message, from_email, to_email)
