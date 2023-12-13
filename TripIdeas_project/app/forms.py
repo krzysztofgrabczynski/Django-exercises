@@ -25,7 +25,7 @@ class CustomPasswordResetForm(PasswordResetForm):
     """
     Custumized `PasswordResetForm` class. Changed `send_mail` method to work with celery and redis (asynchronous email sending).
     """
-    
+
     def send_mail(
         self,
         subject_template_name,
