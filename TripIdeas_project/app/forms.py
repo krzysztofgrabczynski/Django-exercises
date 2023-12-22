@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordResetForm
 from django.template import loader
 
 from app.tasks import send_reset_password_email_task
@@ -24,7 +23,7 @@ class UserRegistrationForm(UserCreationForm):
 
 class CustomPasswordResetForm(PasswordResetForm):
     """
-    Custumized form class `PasswordResetForm`. Def `send_mail` changed to operate with asynchronously sending emial using celery tasks.
+    Custumized `PasswordResetForm` class. Changed `send_mail` method to work with celery and redis (asynchronous email sending).
     """
 
     def send_mail(
