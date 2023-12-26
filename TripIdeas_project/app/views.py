@@ -1,3 +1,4 @@
+from typing import Any
 from django.views import generic
 from django.urls import reverse_lazy
 from django.http import HttpResponse
@@ -8,8 +9,8 @@ from django.contrib.auth.views import (
     LoginView,
 )
 
-from app.forms import UserRegistrationForm, CustomPasswordResetForm
-from app.models import UserProfile
+from app.forms import UserRegistrationForm, CustomPasswordResetForm, CreateTripIdeaForm
+from app.models import UserProfile, TripModel
 from core.settings import EMAIL_HOST_USER
 
 
@@ -48,3 +49,15 @@ class ForgetPasswordView(PasswordResetView):
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "registration/reset_password.html"
     success_url = reverse_lazy("login")
+
+
+class CreateTripIdeaView(generic.edit.CreateView):
+    model = TripModel
+    form_class = CreateTripIdeaForm
+    success_url = reverse_lazy("home")
+    template_name = "create_trip_idea.html"
+
+    def get_form_kwargs(self) -> dict[str, Any]:
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
