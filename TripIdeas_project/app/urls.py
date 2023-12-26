@@ -19,4 +19,7 @@ urlpatterns = [
         app_views.CustomPasswordResetConfirmView.as_view(),
         name="reset_password",
     ),
+    path(
+        "new_trip_idea/", app_views.CreateTripIdeaView.as_view(), name="new_trip_idea"
+    ),
 ]
