@@ -10,7 +10,8 @@ from django.contrib.auth.views import (
 )
 
 from app.forms import UserRegistrationForm, CustomPasswordResetForm, CreateTripIdeaForm
-from app.models import UserProfile, TripModel
+from app.models import TripModel
+from app.mixins import RedirectIfLoggedUserMixin
 from core.settings import EMAIL_HOST_USER
 
 
@@ -22,16 +23,13 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
 
-class CreateUserFormView(generic.FormView):
+class CreateUserFormView(RedirectIfLoggedUserMixin, generic.FormView):
     template_name = "registration/sign_up.html"
     form_class = UserRegistrationForm
     success_url = reverse_lazy("home")
 
     def form_valid(self, form):
         user = form.save()
-        phone_number = form.cleaned_data["phone_number"]
-
-        UserProfile.objects.create(user=user, phone_number=phone_number)
         login(self.request, user)
 
         return super().form_valid(form)
