@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.template import loader
 
 from app.tasks import send_reset_password_email_task
-from app.models import TripModel
+from app.models import TripModel, PriceModelWithTracker, UserProfile
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -12,7 +12,7 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["username", "password1", "password2", "email"]
+        fields = ["username", "password1", "password2", "email", "phone_number"]
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data["phone_number"]
@@ -21,6 +21,13 @@ class UserRegistrationForm(UserCreationForm):
             raise forms.ValidationError("Phone number must be a number with 9 digits")
 
         return phone_number
+
+    def save(self):
+        user = super().save()
+        phone_number = self.cleaned_data["phone_number"]
+        UserProfile.objects.create(user=user, phone_number=phone_number)
+
+        return user
 
 
 class CustomPasswordResetForm(PasswordResetForm):
@@ -43,6 +50,8 @@ class CustomPasswordResetForm(PasswordResetForm):
 
 
 class CreateTripIdeaForm(forms.ModelForm):
+    clean_price = forms.FloatField()
+
     class Meta:
         model = TripModel
         fields = [
@@ -50,7 +59,7 @@ class CreateTripIdeaForm(forms.ModelForm):
             "name",
             "destination",
             "description",
-            "price",
+            "clean_price",
             "is_abroad",
             "contact_number",
         ]
@@ -81,3 +90,8 @@ class CreateTripIdeaForm(forms.ModelForm):
         ):
             raise forms.ValidationError("Contact number is not a valid number")
         return contact_number
+
+    def save(self, *args, **kwargs):
+        price = self.cleaned_data["clean_price"]
+        self.instance.price = PriceModelWithTracker.objects.create(price=price)
+        return super().save(*args, **kwargs)
