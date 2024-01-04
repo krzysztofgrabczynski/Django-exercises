@@ -29,14 +29,11 @@ class RedirectIfLoggedUserMixin:
         return super().dispatch(request, *args, **kwargs)
 
     def get_redirect_field_name(self):
-        # if hasattr(settings, 'SIGNUP_REDIRECT_URL'):
         redirect_field_name = (
             self.redirect_field_name or settings.SIGNUP_REDIRECT_URL
             if hasattr(settings, "SIGNUP_REDIRECT_URL")
             else self.redirect_field_name
         )
-        # else:
-        #     redirect_field_name = self.redirect_field_name
 
         if not redirect_field_name:
             raise ImproperlyConfigured(
