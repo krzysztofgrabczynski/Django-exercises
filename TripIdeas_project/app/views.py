@@ -59,3 +59,10 @@ class CreateTripIdeaView(generic.edit.CreateView):
         kwargs = super().get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
+
+
+class ListTripIdeaVIew(generic.list.ListView):
+    model = TripModel
+    queryset = TripModel.objects.all()
+    template_name = "list_trips.html"
+    context_object_name = "trips"
