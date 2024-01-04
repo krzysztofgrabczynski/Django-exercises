@@ -22,4 +22,6 @@ urlpatterns = [
     path(
         "new_trip_idea/", app_views.CreateTripIdeaView.as_view(), name="new_trip_idea"
     ),
+    path("list_trips/", app_views.ListTripIdeaVIew.as_view(), name="list_trips"),
 ]
+
