@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} New Trip Idea {% endblock %}
+
+{% block body %} 
+
+    <div class="card mx-auto text-center my-5" style="width: 32rem;">
+        <div class="card-body">
+          <h5 class="card-title">Trip Idea</h5>
+            <form method="post">{% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+                    {{ form }}
+                <input type="submit" value="Confirm">
+            </form>
+        </div>
+      </div>
+      
+{% endblock %}
