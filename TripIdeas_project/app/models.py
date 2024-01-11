@@ -56,3 +56,9 @@ class TripModel(models.Model):
     price = models.OneToOneField(PriceModelWithTracker, on_delete=models.CASCADE)
     is_abroad = models.BooleanField(null=False, blank=False)
     contact_number = models.CharField(max_length=9, null=False, blank=False)
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.id})"
+
+    def __repr__(self) -> str:
+        return self.__str__()
