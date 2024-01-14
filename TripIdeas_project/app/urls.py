@@ -23,6 +23,7 @@ urlpatterns = [
         "new_trip_idea/", app_views.CreateTripIdeaView.as_view(), name="new_trip_idea"
     ),
     path("list_trips/", app_views.ListTripIdeaVIew.as_view(), name="list_trips"),
+    path("detail_trip/<pk>/", app_views.TripDetailView.as_view(), name="detail_trip"),
     path(
         "update_trip_idea/<pk>/",
         app_views.UpdateTripIdeaView.as_view(),
