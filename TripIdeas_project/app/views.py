@@ -11,7 +11,11 @@ from django.contrib.auth.views import (
 
 from app.forms import UserRegistrationForm, CustomPasswordResetForm, CreateTripIdeaForm
 from app.models import TripModel
-from app.mixins import RedirectIfLoggedUserMixin, ObjectOwnerRequiredMixin
+from app.mixins import (
+    RedirectIfLoggedUserMixin,
+    ObjectOwnerRequiredMixin,
+    RecentlyViewedItemsMixin,
+)
 from core.settings import EMAIL_HOST_USER
 
 
@@ -61,17 +65,24 @@ class CreateTripIdeaView(generic.edit.CreateView):
         return kwargs
 
 
+class TripDetailView(RecentlyViewedItemsMixin, generic.detail.DetailView):
+    model = TripModel
+    template_name = "detail_trip.html"
+    context_object_name = "trip"
+
+
 class ListTripIdeaVIew(generic.list.ListView):
     model = TripModel
     template_name = "list_trips.html"
     context_object_name = "trips"
 
 
-class UpdateTripIdeaView(generic.edit.UpdateView):
+class UpdateTripIdeaView(ObjectOwnerRequiredMixin, generic.edit.UpdateView):
     model = TripModel
     form_class = CreateTripIdeaForm
     success_url = reverse_lazy("list_trips")
     template_name = "create_trip_idea.html"
+    owner_field_name = "owner"
 
     def get_form_kwargs(self) -> dict[str, Any]:
         kwargs = super().get_form_kwargs()
