@@ -72,3 +72,62 @@ class ObjectOwnerRequiredMixin(AccessMixin):
         if not request.user == self._get_object_owner():
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
+
+
+class RecentlyViewedItemsMixin:
+    model = None
+    atribute_field_name = "recently_viewed_items"
+
+    def get(self, request, *args, **kwargs):
+        self._add_item_to_viewed_list(self.get_object())
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recently_viewed_items = self.request.session[self.atribute_field_name]
+        context = self._add_to_context(recently_viewed_items, context)
+
+        return context
+
+    def get_model(self):
+        if self.model is None:
+            raise ImproperlyConfigured(
+                f"You must provide a model field in {self.__class__.__name__} class."
+            )
+        return self.model
+
+    @property
+    def recently_viewed_items(self):
+        return self.request.session.get(self.atribute_field_name, [])
+
+    def _add_item_to_viewed_list(self, obj):
+        object_list = self.recently_viewed_items
+        object_list_max_len = 5
+
+        if object_list == []:
+            self._add_first_obj(object_list, obj)
+        else:
+            if obj.id in object_list:
+                object_list.remove(obj.id)
+
+            if len(object_list) == object_list_max_len:
+                object_list.pop()
+
+            object_list.insert(0, obj.id)
+
+        self.request.session[self.atribute_field_name] = object_list
+
+    def _add_first_obj(self, obj_list, obj):
+        obj_list.insert(0, obj.id)
+
+    def _add_to_context(self, items_list, context):
+        context.update(
+            {
+                self.atribute_field_name: self.get_model().objects.filter(
+                    pk__in=items_list
+                )
+            }
+        )
+        return sorted(
+            context[self.atribute_field_name], key=lambda x: items_list.index(x.id)
+        )
