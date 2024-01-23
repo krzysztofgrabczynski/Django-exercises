@@ -121,13 +121,11 @@ class RecentlyViewedItemsMixin:
         obj_list.insert(0, obj.id)
 
     def _add_to_context(self, items_list, context):
-        context.update(
-            {
-                self.atribute_field_name: self.get_model().objects.filter(
-                    pk__in=items_list
-                )
-            }
+        objects_from_items_list = self.get_model().objects.filter(pk__in=items_list)
+        sorted_objects = sorted(
+            objects_from_items_list, key=lambda x: items_list.index(x.id)
         )
-        return sorted(
-            context[self.atribute_field_name], key=lambda x: items_list.index(x.id)
-        )
+
+        context.update({self.atribute_field_name: sorted_objects})
+
+        return context
