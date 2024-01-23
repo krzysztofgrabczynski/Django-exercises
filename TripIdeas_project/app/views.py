@@ -19,8 +19,10 @@ from app.mixins import (
 from core.settings import EMAIL_HOST_USER
 
 
-def home(request):
-    return HttpResponse("home page")
+class HomeView(generic.list.ListView):
+    model = TripModel
+    template_name = "list_trips.html"
+    context_object_name = "trips"
 
 
 class CustomLoginView(LoginView):
@@ -69,12 +71,6 @@ class TripDetailView(RecentlyViewedItemsMixin, generic.detail.DetailView):
     model = TripModel
     template_name = "detail_trip.html"
     context_object_name = "trip"
-
-
-class ListTripIdeaVIew(generic.list.ListView):
-    model = TripModel
-    template_name = "list_trips.html"
-    context_object_name = "trips"
 
 
 class UpdateTripIdeaView(ObjectOwnerRequiredMixin, generic.edit.UpdateView):

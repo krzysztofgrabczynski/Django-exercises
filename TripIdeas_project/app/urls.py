@@ -5,7 +5,7 @@ from app import views as app_views
 
 
 urlpatterns = [
-    path("home/", app_views.home, name="home"),
+    path("home/", app_views.HomeView.as_view(), name="home"),
     path("sign-up/", app_views.CreateUserFormView.as_view(), name="sign_up"),
     path("login/", app_views.CustomLoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
@@ -22,7 +22,6 @@ urlpatterns = [
     path(
         "new_trip_idea/", app_views.CreateTripIdeaView.as_view(), name="new_trip_idea"
     ),
-    path("list_trips/", app_views.ListTripIdeaVIew.as_view(), name="list_trips"),
     path("detail_trip/<pk>/", app_views.TripDetailView.as_view(), name="detail_trip"),
     path(
         "update_trip_idea/<pk>/",
