@@ -44,7 +44,6 @@ class CreateUserFormView(RedirectIfLoggedUserMixin, generic.FormView):
 class ForgetPasswordView(PasswordResetView):
     form_class = CustomPasswordResetForm
     template_name = "registration/forget_password.html"
-    form_class = CustomPasswordResetForm
     success_url = reverse_lazy("login")
     email_template_name = "registration/email_template_name.html"
     from_email = EMAIL_HOST_USER
