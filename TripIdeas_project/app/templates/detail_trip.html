@@ -3,21 +3,29 @@
 {% block title %} New Trip Idea {% endblock %}
 
 {% block body %} 
-
-    <div class="card mx-auto text-center my-5" style="width: 32rem;">
-        <div class="card-body">
-          <h5 class="card-title">Trip: </h5>
-                Name: {{ trip.name }} <br>
-                Destination: {{ trip.destination }} <br>
-                Description: {{ trip.description }} <br>
-                Price: {{ trip.price }} <br>
-                Is abroad: {{ trip.is_abroad }} <br>
-                Contact number: {{ trip.contact_number }} <br>
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>Trip:</h2>
+        <div style="margin: 0 auto; max-width: 32rem;">
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; text-align: left;">
+                <h2>Trip Information:</h2>
+                <p>
+                    Name: {{ trip.name }} <br>
+                    Destination: {{ trip.destination }} <br>
+                    Description: {{ trip.description }} <br>
+                    Price: {{ trip.price }} <br>
+                    Is abroad: {{ trip.is_abroad }} <br>
+                    Contact number: {{ trip.contact_number }} <br>
+                </p>
                 <hr>
-                {% for item in recently_viewed_items %}
-                  {{ item }}, 
-                {% endfor %}
+                <h3>Recently Viewed Items:</h3>
+                <p>
+                    {% for item in recently_viewed_items %}
+                      <a href="{% url 'detail_trip' item.id %}">
+                        {{ item.name }}
+                      </a> 
+                    {% endfor %}
+                </p>
+            </div>
         </div>
-      </div>
-      
+    </div>
 {% endblock %}

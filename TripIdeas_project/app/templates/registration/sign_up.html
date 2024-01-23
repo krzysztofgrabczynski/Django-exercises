@@ -3,17 +3,20 @@
 {% block title %} Sign up {% endblock %}
 
 {% block body %} 
-
-    <div class="card mx-auto text-center my-5" style="width: 48rem;">
-        <div class="card-body">
-          <h5 class="card-title">Sign up</h5>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <br>
-                <button type="submit" class="btn btn-primary">Sign up</button>
-            </form>
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>Sign up</h2>
+        <div style="margin: 0 auto; max-width: 48rem;">
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; text-align: left;">
+                <h5>Sign up Form</h5>
+                <form method="post" style="margin-top: 15px;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <button type="submit" style="margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer;">
+                        Sign up
+                    </button>
+                </form>
+            </div>
         </div>
-      </div>
-      
+    </div>
 {% endblock %}

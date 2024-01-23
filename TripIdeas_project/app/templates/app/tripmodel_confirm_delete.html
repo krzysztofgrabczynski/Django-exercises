@@ -3,16 +3,19 @@
 {% block title %} New Trip Idea {% endblock %}
 
 {% block body %} 
-
-    <div class="card mx-auto text-center my-5" style="width: 32rem;">
-        <div class="card-body">
-          <h5 class="card-title">Trip Idea</h5>
-            <form method="post">{% csrf_token %}
-                <p>Are you sure you want to delete "{{ object }}"?</p>
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>Trip Idea</h2>
+        <div style="margin: 0 auto; max-width: 32rem;">
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 5px; text-align: left;">
+                <h5>Delete Confirmation</h5>
+                <form method="post" style="margin-top: 15px;">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete "{{ object }}"?</p>
                     {{ form }}
-                <input type="submit" value="Confirm">
-            </form>
+
+                    <input type="submit" value="Confirm" style="margin-top: 10px; padding: 8px 15px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer;">
+                </form>
+            </div>
         </div>
-      </div>
-      
+    </div>
 {% endblock %}
