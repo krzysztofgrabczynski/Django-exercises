@@ -50,7 +50,7 @@ class CustomPasswordResetForm(PasswordResetForm):
 
 
 class CreateTripIdeaForm(forms.ModelForm):
-    clean_price = forms.FloatField()
+    clean_price = forms.FloatField(label="Price")
 
     class Meta:
         model = TripModel
