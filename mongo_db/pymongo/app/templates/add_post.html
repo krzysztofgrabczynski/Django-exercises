@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Post{% endblock %}
+
+{% block content %}
+    <h1>Add New Post</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_title">Title:</label><br>
+        <input type="text" id="id_title" name="title" required><br><br>
+
+        <label for="id_visible">Visible:</label>
+        <input type="checkbox" id="id_visible" name="visible"><br><br>
+
+        <button type="submit">Add Post</button>
+    </form>
+{% endblock %}
