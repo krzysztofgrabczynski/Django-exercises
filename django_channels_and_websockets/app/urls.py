@@ -3,5 +3,6 @@ from django.urls import path
 from app import views
 
 urlpatterns = [
-    path("chat/", views.chat, name="chat"),
+    path("", views.home, name="home"),
+    path("<str:room_name>/", views.chat, name="room"),
 ]
