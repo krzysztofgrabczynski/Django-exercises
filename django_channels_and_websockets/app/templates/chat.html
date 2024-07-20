@@ -2,5 +2,49 @@
 
 
 {% block body %} 
-    <h1> Lets chat! </h1>
+    <h1>Room: {{ room_name }}</h1>
+    <div id="chat"></div>
+    <div id="chat-input">
+        <input type="text" id="chat-message-input">
+        <input type="submit" id="chat-message-submit" value="Send">
+    </div>
+
+    <script>
+        const roomName = "{{ room_name }}";
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/' + roomName + '/');
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const chat = document.getElementById('chat');
+
+            chat.innerHTML += '<div class="message">' + data.message + '</div>';
+            chat.scrollHeight;
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        const input = document.getElementById('chat-message-input');
+        const submitButton = document.getElementById('chat-message-submit');
+
+        submitButton.addEventListener('click', function(e) {
+            const message = input.value;
+            if(message) {
+                chatSocket.send(JSON.stringify({'message':message}));
+                input.value = '';
+                input.focus();
+            }
+        });
+
+        input.addEventListener('keypress', function(e) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                submitButton.click();
+            }
+        });
+        input.focus();
+    </script>
 {% endblock %}
